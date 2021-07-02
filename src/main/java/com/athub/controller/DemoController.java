@@ -35,11 +35,11 @@ public class DemoController {
         return TokenUtils.check(signature, timestamp, nonce, echostr);
     }
 
-//    @GetMapping
-//    public String say2(String a) {
-//        logger.info(a);
-//        return a;
-//    }
+    @GetMapping("/say2")
+    public String say2(String a) {
+        logger.info(a);
+        return a;
+    }
 
     @Autowired
     private CoreService coreService;

@@ -18,3 +18,7 @@ mybatis:
   type-aliases-package: com.athub.dto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+gzhInfo:
+  appId: wx384c16ccac5ef976
+  appSecret: 3693f28bb82b0d0667510291b8409077

@@ -1,5 +1,8 @@
 package com.athub.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -8,9 +11,14 @@ import java.security.NoSuchAlgorithmException;
  */
 public class TokenUtils {
 
-    private static String TOKEN = "abcd";
+    private static String TOKEN = "helloworld";
+
+    private static Logger logger = LoggerFactory.getLogger(TokenUtils.class);
 
     public static String check(String signature, String timestamp, String nonce, String echostr) {
+
+        logger.info(String.format("signature:%s; nonce: %s; echostr: %s", signature, nonce, echostr));
+
         String[] arr = new String[]{TOKEN, timestamp, nonce};
 
         // 将token、timestamp、nonce三个参数进行字典序排序

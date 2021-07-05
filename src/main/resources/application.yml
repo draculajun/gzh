@@ -22,3 +22,17 @@ mybatis:
 gzhInfo:
   appId: wx384c16ccac5ef976
   appSecret: 3693f28bb82b0d0667510291b8409077
+  accessTokenUrlFormat: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s
+  menuCreateUrlFormat: https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s
+  menuGetUrlFormat: https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=%s
+  menuDeleteUrlFormat: https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=%s
+
+logging:
+  level:
+    root: info
+    com.athub: debug
+  file:
+    path: /home/logs/${spring.application.name}
+    name: ${logging.file.path}/${spring.application.name}.log
+    max-size: 100MB
+    max-history: 7

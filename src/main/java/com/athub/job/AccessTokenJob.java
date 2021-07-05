@@ -2,6 +2,7 @@ package com.athub.job;
 
 import com.alibaba.fastjson.JSONObject;
 import com.athub.dto.AccessToken;
+import com.athub.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,11 +24,13 @@ public class AccessTokenJob {
     @Value("${gzhInfo.appSecret}")
     private String appSecret;
 
+    @Value("${gzhInfo.accessTokenUrlFormat}")
+    private String accessTokenUrlFormat;
+
     private static String accessTokenStr;
 
     @Scheduled(fixedDelay = 1000 * 60 * 60 * 2)
     public void setAccessToken() {
-        String accessTokenUrlFormat = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
         String accessTokenUrl = String.format(accessTokenUrlFormat, appId, appSecret);
         String accessTokenJson = restTemplate.getForObject(accessTokenUrl, String.class);
         AccessToken accessToken = JSONObject.parseObject(accessTokenJson, AccessToken.class);
@@ -35,6 +38,9 @@ public class AccessTokenJob {
     }
 
     public static String getAccessTokenStr() {
+        if (accessTokenStr == null) {
+            throw new BusinessException("500", "获取accessToken失败！");
+        }
         return accessTokenStr;
     }
 

@@ -20,9 +20,9 @@ import java.io.PrintWriter;
 /**
  * @author Wang wenjun
  */
-
-@Configuration
-@WebFilter
+@Deprecated
+//@Configuration
+//@WebFilter
 public class AccessTokenFilter extends OncePerRequestFilter {
 
     private static Logger logger = LoggerFactory.getLogger(AccessTokenFilter.class);

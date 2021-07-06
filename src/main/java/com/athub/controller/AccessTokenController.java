@@ -1,6 +1,7 @@
 package com.athub.controller;
 
 import com.athub.dto.Result;
+import com.athub.interceptor.NoNeedAccessToken;
 import com.athub.job.AccessTokenJob;
 import com.athub.utils.ResultUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin("*")
 @RestController
+@NoNeedAccessToken
 public class AccessTokenController {
 
     @GetMapping("/accessToken")

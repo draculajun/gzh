@@ -1,5 +1,6 @@
 package com.athub.controller;
 
+import com.athub.interceptor.NoNeedAccessToken;
 import com.athub.service.CoreService;
 import com.athub.utils.TokenUtils;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import java.io.UnsupportedEncodingException;
  */
 @CrossOrigin("*")
 @RestController
+@NoNeedAccessToken
 public class GzhController {
 
     private final static Logger logger = LoggerFactory.getLogger(GzhController.class);

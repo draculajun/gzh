@@ -1,17 +1,12 @@
 package com.athub.dto.req;
 
+import lombok.Data;
+
 /**
  * @Author Wang wenjun
  */
+@Data
 public class TextMessageReq extends BaseMessageReq {
-
-    public String getContent() {
-        return Content;
-    }
-
-    public void setContent(String content) {
-        Content = content;
-    }
 
     private String Content;
 

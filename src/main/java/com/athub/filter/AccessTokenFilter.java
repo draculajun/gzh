@@ -29,7 +29,8 @@ public class AccessTokenFilter extends OncePerRequestFilter {
 
     public String[] getWhiteArray() {
         String[] whiteArray = new String[]{
-                "/accessToken"
+                "/accessToken",
+                "/gzh"
         };
         return whiteArray;
     }

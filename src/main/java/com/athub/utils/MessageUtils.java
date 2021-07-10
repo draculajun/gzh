@@ -1,9 +1,6 @@
 package com.athub.utils;
 
-import com.athub.dto.resp.TextMessageResp;
-import com.athub.dto.resp.Article;
-import com.athub.dto.resp.MusicMessageResp;
-import com.athub.dto.resp.NewsMessageResp;
+import com.athub.dto.resp.*;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
@@ -68,6 +65,18 @@ public class MessageUtils {
     public static String textMessageToXml(TextMessageResp textMessage) {
         xstream.alias("xml", textMessage.getClass());
         return xstream.toXML(textMessage);
+    }
+
+    /**
+     * 图片消息对象转换成xml
+     *
+     * @param imageMessageResp 图片消息对象
+     * @return xml
+     */
+    public static String imageMessageToXml(ImageMessageResp imageMessageResp) {
+        xstream.alias("xml", imageMessageResp.getClass());
+        xstream.alias("Image", new Image().getClass());
+        return xstream.toXML(imageMessageResp);
     }
 
     /**

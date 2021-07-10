@@ -23,12 +23,25 @@ gzhInfo:
   appId: wx384c16ccac5ef976
   appSecret: 3693f28bb82b0d0667510291b8409077
   accessTokenUrlFormat: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s
+
+  # 菜单
   menuCreateUrlFormat: https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s
   menuGetUrlFormat: https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=%s
   menuDeleteUrlFormat: https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=%s
+
+  # 永久图文素材
+  newsAddFormat: https://api.weixin.qq.com/cgi-bin/material/add_news?access_token=%s
+
+  # 其他类型永久素材
   materialAddFormat: https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=%s&type=%s
   materialGetFormat: https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=%s
+
+  # 获取素材总数
+  meterialCountFormat: https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token=%s
+  # 获取素材列表
   materialBatchGetFormat: https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=%s
+
+
 
 logging:
   level:

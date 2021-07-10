@@ -1,6 +1,10 @@
 package com.athub.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.athub.dto.MaterialCountDto;
 import com.athub.dto.MaterialQueryDto;
+import com.athub.dto.NewsArticleDto;
 import com.athub.exception.BusinessException;
 import com.athub.service.MaterialService;
 import com.athub.utils.RequestHeaderContext;
@@ -15,6 +19,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,11 +39,17 @@ public class MaterialServiceImpl implements MaterialService {
     @Value("${gzhInfo.materialBatchGetFormat}")
     private String materialBatchGetFormat;
 
+    @Value("${gzhInfo.newsAddFormat}")
+    private String newsAddFormat;
+
+    @Value("${gzhInfo.meterialCountFormat}")
+    private String meterialCountFormat;
+
     @Autowired
     private RestTemplate restTemplate;
 
     @Override
-    public boolean add(File file, String type) {
+    public boolean addOthers(File file, String type) {
         String url = String.format(materialAddFormat, RequestHeaderContext.getInstance().getAccessToken(), type);
         try {
             String result = this.connectHttpsByPost(url, file);
@@ -46,9 +57,25 @@ public class MaterialServiceImpl implements MaterialService {
                 return false;
             }
         } catch (Exception e) {
+            logger.error(e.toString());
             throw new BusinessException("500", "新增其他类型永久素材失败：" + e.toString());
         }
         return true;
+    }
+
+    @Override
+    public String addNews(List<NewsArticleDto> articlesList) {
+        try {
+            String url = String.format(newsAddFormat, RequestHeaderContext.getInstance().getAccessToken());
+            Map map = new HashMap<>();
+            map.put("articles", articlesList);
+            String str = restTemplate.postForObject(url, map, String.class);
+            JSONObject jo = JSON.parseObject(str);
+            return jo.get("media_id").toString();
+        } catch (Exception e) {
+            logger.error(e.toString());
+            throw new BusinessException("500", "上传永久图文素材失败");
+        }
     }
 
     @Override
@@ -64,6 +91,18 @@ public class MaterialServiceImpl implements MaterialService {
         String url = String.format(materialBatchGetFormat, RequestHeaderContext.getInstance().getAccessToken());
         String result = restTemplate.postForObject(url, materialQueryDto, String.class);
         return result;
+    }
+
+    @Override
+    public MaterialCountDto count() {
+        try {
+            String url = String.format(meterialCountFormat, RequestHeaderContext.getInstance().getAccessToken());
+            String str = restTemplate.getForObject(url, String.class);
+            return JSONObject.parseObject(str, MaterialCountDto.class);
+        } catch (Exception e) {
+            logger.error(e.toString());
+            throw new BusinessException("500", "获取素材总数失败");
+        }
     }
 
     public String connectHttpsByPost(String url, File file) throws Exception {

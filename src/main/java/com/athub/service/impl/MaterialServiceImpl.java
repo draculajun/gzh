@@ -1,5 +1,6 @@
 package com.athub.service.impl;
 
+import com.athub.dto.MaterialQueryDto;
 import com.athub.exception.BusinessException;
 import com.athub.service.MaterialService;
 import com.athub.utils.RequestHeaderContext;
@@ -30,6 +31,9 @@ public class MaterialServiceImpl implements MaterialService {
     @Value("${gzhInfo.materialGetFormat}")
     private String materialGetFormat;
 
+    @Value("${gzhInfo.materialBatchGetFormat}")
+    private String materialBatchGetFormat;
+
     @Autowired
     private RestTemplate restTemplate;
 
@@ -52,8 +56,14 @@ public class MaterialServiceImpl implements MaterialService {
         String url = String.format(materialGetFormat, RequestHeaderContext.getInstance().getAccessToken());
         Map map = new HashMap<>();
         map.put("media_id", mediaId);
-        byte[] resultByteArr = restTemplate.postForObject(url, map, byte[].class);
-        return resultByteArr;
+        return restTemplate.postForObject(url, map, byte[].class);
+    }
+
+    @Override
+    public Object page(MaterialQueryDto materialQueryDto) {
+        String url = String.format(materialBatchGetFormat, RequestHeaderContext.getInstance().getAccessToken());
+        String result = restTemplate.postForObject(url, materialQueryDto, String.class);
+        return result;
     }
 
     public String connectHttpsByPost(String url, File file) throws Exception {

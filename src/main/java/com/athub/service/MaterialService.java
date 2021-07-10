@@ -1,5 +1,7 @@
 package com.athub.service;
 
+import com.athub.dto.MaterialQueryDto;
+
 import java.io.File;
 
 /**
@@ -11,4 +13,5 @@ public interface MaterialService {
 
     byte[] get(String mediaId);
 
+    Object page(MaterialQueryDto materialQueryDto);
 }

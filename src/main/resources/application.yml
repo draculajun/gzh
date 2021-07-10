@@ -28,6 +28,7 @@ gzhInfo:
   menuDeleteUrlFormat: https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=%s
   materialAddFormat: https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=%s&type=%s
   materialGetFormat: https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=%s
+  materialBatchGetFormat: https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=%s
 
 logging:
   level:

@@ -92,6 +92,7 @@ public class CoreServiceImpl implements CoreService {
         return imgMessage;
     }
 
+    //回复图文消息
     private NewsMessageResp getNewsResponse(NewsMessageResp newMessage) {
         newMessage.setMsgType("news");
         Article article = new Article();

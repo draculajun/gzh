@@ -23,7 +23,8 @@ public class AccessTokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
-        String accessToken = request.getHeader("accessToken");
+        String accessToken = AccessTokenJob.getAccessTokenStr();
+//        String accessToken = request.getHeader("accessToken");
         PrintWriter out;
 
         // 对于注解的判断

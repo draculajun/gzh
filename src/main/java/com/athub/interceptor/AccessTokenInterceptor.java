@@ -28,6 +28,9 @@ public class AccessTokenInterceptor implements HandlerInterceptor {
         PrintWriter out;
 
         // 对于注解的判断
+        if (!(handler instanceof HandlerMethod)) {
+            return false;
+        }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         // 如果自己拥有NoNeedToken标注或者所属的class拥有NoNeedToken 就直接放行
         if (handlerMethod.getMethodAnnotation(NoNeedAccessToken.class) != null || handlerMethod.getBeanType().isAnnotationPresent(NoNeedAccessToken.class)) {

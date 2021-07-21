@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @Author Wang wenjun
  */
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/material")
 public class MaterialController {

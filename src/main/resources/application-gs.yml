@@ -1,0 +1,58 @@
+server:
+  port: 8888
+  tomcat:
+    basedir: ../logs/${spring.application.name}/tomcat/
+
+spring:
+  application:
+    name: gzh
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.16.0.180:3306/athub?characterEncoding=UTF-8&useSSL=true&serverTimezone=GMT%2b8&allowMultiQueries=true
+    username: athubtest
+    password: Athub!Test
+
+mybatis:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+  type-aliases-package: com.athub.dto
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+gzhInfo:
+  appId: wx384c16ccac5ef976
+  appSecret: 3693f28bb82b0d0667510291b8409077
+  accessTokenUrlFormat: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s
+
+  # 菜单
+  menuCreateUrlFormat: https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s
+  menuGetUrlFormat: https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=%s
+  menuDeleteUrlFormat: https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=%s
+
+  # 临时素材
+  materialTemporaryMediaAddFormat: https://api.weixin.qq.com/cgi-bin/media/upload?access_token=%s&type=%s
+  materialTemporaryMediaGetFormat: https://api.weixin.qq.com/cgi-bin/media/get?access_token=%s&media_id=%s
+
+  # 永久图文素材
+  materialNewsForeverAddFormat: https://api.weixin.qq.com/cgi-bin/material/add_news?access_token=%s
+
+  # 其他类型永久素材
+  materialForeverAddFormat: https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=%s&type=%s
+  materialForeverGetFormat: https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=%s
+
+  # 获取素材总数
+  meterialCountFormat: https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token=%s
+  # 获取素材列表
+  materialBatchGetFormat: https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=%s
+
+
+
+logging:
+  level:
+    root: info
+    com.athub: debug
+  file:
+    path: /home/logs/${spring.application.name}
+    name: ${logging.file.path}/${spring.application.name}.log
+    max-size: 100MB
+    max-history: 7

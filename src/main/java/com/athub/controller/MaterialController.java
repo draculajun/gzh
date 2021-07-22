@@ -28,6 +28,37 @@ public class MaterialController {
     MaterialService materialService;
 
     /**
+     * 新增临时素材
+     *
+     * @param file
+     * @param type
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/temporary/media")
+    public Result addTemporaryMedia(@RequestParam("file") MultipartFile file, @RequestParam("type") String type) throws Exception {
+        if (materialService.addTemporaryMedia(FileUtils.multipartFileToFile(file), type)) {
+            return ResultUtils.success("新增临时素材成功");
+        } else {
+            return ResultUtils.error(500, "新增临时素材失败");
+        }
+    }
+
+    /**
+     * 获取临时素材
+     *
+     * @param mediaId
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/temporary/media_id/{media_id}")
+    public ResponseEntity<byte[]> getTemporaryMedia(@PathVariable("media_id") String mediaId) throws IOException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=\"" + mediaId + ".jpg" + "\"");
+        return new ResponseEntity<byte[]>(materialService.getTemporaryMedia(mediaId), headers, HttpStatus.OK);
+    }
+
+    /**
      * 新增其他永久素材
      *
      * @param file
@@ -35,9 +66,9 @@ public class MaterialController {
      * @return
      * @throws Exception
      */
-    @PostMapping("/others")
-    public Result addOthers(@RequestParam("file") MultipartFile file, @RequestParam("type") String type) throws Exception {
-        if (materialService.addOthers(FileUtils.multipartFileToFile(file), type)) {
+    @PostMapping("/forever/others")
+    public Result addForeverOthers(@RequestParam("file") MultipartFile file, @RequestParam("type") String type) throws Exception {
+        if (materialService.addForeverOthers(FileUtils.multipartFileToFile(file), type)) {
             return ResultUtils.success("新增永久素材成功");
         } else {
             return ResultUtils.error(500, "新增永久素材失败");
@@ -59,11 +90,11 @@ public class MaterialController {
      * @return
      * @throws IOException
      */
-    @GetMapping(value = "/media_id/{media_id}")
-    public ResponseEntity<byte[]> get(@PathVariable("media_id") String mediaId) throws IOException {
+    @GetMapping(value = "/forever/media_id/{media_id}")
+    public ResponseEntity<byte[]> getForeverMedia(@PathVariable("media_id") String mediaId) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=\"" + mediaId + ".jpg" + "\"");
-        return new ResponseEntity<byte[]>(materialService.get(mediaId), headers, HttpStatus.OK);
+        return new ResponseEntity<byte[]>(materialService.getForeverMedia(mediaId), headers, HttpStatus.OK);
     }
 
     /**

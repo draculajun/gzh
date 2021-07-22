@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
  * @Author Wang wenjun
  */
 @CrossOrigin("*")
-@RestController("/menuOper")
+@RestController
+@RequestMapping("/menuOper")
 public class MenuController {
 
     @Autowired

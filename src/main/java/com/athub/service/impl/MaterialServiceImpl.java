@@ -7,11 +7,13 @@ import com.athub.dto.MaterialQueryDto;
 import com.athub.dto.NewsArticleDto;
 import com.athub.exception.BusinessException;
 import com.athub.service.MaterialService;
+import com.athub.utils.GzhUploadUtils;
 import com.athub.utils.RequestHeaderContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,17 +32,23 @@ public class MaterialServiceImpl implements MaterialService {
 
     private final static Logger logger = LoggerFactory.getLogger(MaterialServiceImpl.class);
 
-    @Value("${gzhInfo.materialAddFormat}")
-    private String materialAddFormat;
+    @Value("${gzhInfo.materialTemporaryMediaAddFormat}")
+    private String materialTemporaryMediaAddFormat;
 
-    @Value("${gzhInfo.materialGetFormat}")
-    private String materialGetFormat;
+    @Value("{gzhInfo.materialTemporaryMediaGetFormat}")
+    private String materialTemporaryMediaGetFormat;
+
+    @Value("${gzhInfo.materialForeverAddFormat}")
+    private String materialForeverAddFormat;
+
+    @Value("${gzhInfo.materialForeverGetFormat}")
+    private String materialForeverGetFormat;
 
     @Value("${gzhInfo.materialBatchGetFormat}")
     private String materialBatchGetFormat;
 
-    @Value("${gzhInfo.newsAddFormat}")
-    private String newsAddFormat;
+    @Value("${gzhInfo.materialNewsForeverAddFormat}")
+    private String materialNewsForeverAddFormat;
 
     @Value("${gzhInfo.meterialCountFormat}")
     private String meterialCountFormat;
@@ -49,24 +57,22 @@ public class MaterialServiceImpl implements MaterialService {
     private RestTemplate restTemplate;
 
     @Override
-    public boolean addOthers(File file, String type) {
-        String url = String.format(materialAddFormat, RequestHeaderContext.getInstance().getAccessToken(), type);
+    public boolean addForeverOthers(File file, String type) {
         try {
-            String result = this.connectHttpsByPost(url, file);
-            if (result == null) {
-                return false;
-            }
+            String url = String.format(materialForeverAddFormat, RequestHeaderContext.getInstance().getAccessToken(), type);
+            ResponseEntity responseEntity = GzhUploadUtils.uploadFile(url, file, type);
+            logger.info("addForeverOthers:" + responseEntity.getBody().toString());
+            return true;
         } catch (Exception e) {
             logger.error(e.toString());
             throw new BusinessException("500", "新增其他类型永久素材失败：" + e.toString());
         }
-        return true;
     }
 
     @Override
     public String addNews(List<NewsArticleDto> articlesList) {
         try {
-            String url = String.format(newsAddFormat, RequestHeaderContext.getInstance().getAccessToken());
+            String url = String.format(materialNewsForeverAddFormat, RequestHeaderContext.getInstance().getAccessToken());
             Map map = new HashMap<>();
             map.put("articles", articlesList);
             String str = restTemplate.postForObject(url, map, String.class);
@@ -79,8 +85,8 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public byte[] get(String mediaId) {
-        String url = String.format(materialGetFormat, RequestHeaderContext.getInstance().getAccessToken());
+    public byte[] getForeverMedia(String mediaId) {
+        String url = String.format(materialForeverGetFormat, RequestHeaderContext.getInstance().getAccessToken());
         Map map = new HashMap<>();
         map.put("media_id", mediaId);
         return restTemplate.postForObject(url, map, byte[].class);
@@ -105,6 +111,28 @@ public class MaterialServiceImpl implements MaterialService {
         }
     }
 
+    @Override
+    public boolean addTemporaryMedia(File file, String type) {
+        try {
+            String url = String.format(materialTemporaryMediaAddFormat, RequestHeaderContext.getInstance().getAccessToken(), type);
+            ResponseEntity responseEntity = GzhUploadUtils.uploadFile(url, file, type);
+            logger.info("addTemporaryMedia:" + responseEntity.getBody().toString());
+            return true;
+        } catch (Exception e) {
+            logger.error(e.toString());
+            throw new BusinessException("500", "新增临时素材失败：" + e.toString());
+        }
+    }
+
+    @Override
+    public byte[] getTemporaryMedia(String mediaId) {
+        String url = String.format(materialForeverGetFormat, RequestHeaderContext.getInstance().getAccessToken());
+        Map map = new HashMap<>();
+        map.put("media_id", mediaId);
+        return restTemplate.postForObject(url, map, byte[].class);
+    }
+
+    @Deprecated
     public String connectHttpsByPost(String url, File file) throws Exception {
         URL urlObj = new URL(url);
         //连接

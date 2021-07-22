@@ -12,13 +12,17 @@ import java.util.List;
  */
 public interface MaterialService {
 
-    boolean addOthers(File file, String type);
+    boolean addForeverOthers(File file, String type);
 
     String addNews(List<NewsArticleDto> articlesList);
 
-    byte[] get(String mediaId);
+    byte[] getForeverMedia(String mediaId);
 
     Object page(MaterialQueryDto materialQueryDto);
 
     MaterialCountDto count();
+
+    boolean addTemporaryMedia(File multipartFileToFile, String type);
+
+    byte[] getTemporaryMedia(String mediaId);
 }

@@ -1,5 +1,6 @@
 package com.athub.controller;
 
+import com.athub.entity.Person;
 import com.athub.dto.Result;
 import com.athub.service.PersonService;
 import com.athub.utils.ResultUtils;
@@ -18,8 +19,16 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public Result get(@PathVariable("id") Long id) throws IOException {
-        return ResultUtils.success(personService.get(id), "");
+        return ResultUtils.success(personService.selectById(id), "");
     }
 
+    @PostMapping
+    public Result insert(@RequestBody Person person) {
+        return ResultUtils.success(personService.insert(person), "");
+    }
 
+    @DeleteMapping("/{id}")
+    public Result delete(@PathVariable("id") Long id) {
+        return ResultUtils.success(personService.deleteById(id), "");
+    }
 }

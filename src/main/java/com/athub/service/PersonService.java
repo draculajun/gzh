@@ -1,9 +1,13 @@
 package com.athub.service;
 
-import com.athub.dto.Person;
+import com.athub.entity.Person;
 
 public interface PersonService {
 
-    Person get(Long id);
+    Person selectById(Long id);
+
+    int insert(Person person);
+
+    int deleteById(Long id);
 
 }

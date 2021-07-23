@@ -6,18 +6,27 @@ server:
 spring:
   application:
     name: gzh
+  profiles:
+    active:
+      dev
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/assessment?characterEncoding=UTF-8&useSSL=true&serverTimezone=GMT%2b8&allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8&useSSL=true&serverTimezone=GMT%2b8&allowMultiQueries=true
     username: root
     password: wucena008
 
 mybatis:
   mapper-locations: classpath*:/mapper/**Mapper.xml
-  type-aliases-package: com.athub.dto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-filed: flag
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
 
 gzhInfo:
   appId: wx384c16ccac5ef976

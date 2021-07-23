@@ -1,10 +1,8 @@
 package com.athub.mapperdao;
 
-import com.athub.dto.Person;
-import org.apache.ibatis.annotations.Param;
+import com.athub.entity.Person;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface PersonMapper {
-
-    Person get(@Param("id") Long id);
+public interface PersonMapper extends BaseMapper<Person> {
 
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.athub.mapperdao.AddressMapper">
+
+    <sql id="select_parameter">
+        a.id AS ID,
+        a.description AS DESCRIPTION,
+        a.enterby AS ENTERBY,
+        a.enterdate AS ENTERDATE,
+        b.id AS b_ID,
+        b.name AS b_NAME,
+        b.age AS b_AGE,
+        b.enterby AS b_ENTERBY,
+        b.enterdate AS b_ENTERDATE
+    </sql>
+
+    <sql id="where_sql_conditions">
+        <if test="id != null">
+            AND a.id = #{id}
+        </if>
+        <if test="ids != null and ids.size > 0">
+            AND a.id in
+            <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="personId != null">
+            AND a.person_id = #{personId}
+        </if>
+        <if test="description != null and description !=''">
+            AND a.description LIKE CONCAT('%', #{description}, '%')
+        </if>
+        <if test="enterby != null and enterby !=''">
+            AND a.enterby = #{enterby}
+        </if>
+        <if test="startDate != null">
+            AND date_format(a.enterdate, '%Y-%m-%d') &gt;= date_format(#{startDate}, '%Y-%m-%d')
+        </if>
+    </sql>
+
+    <resultMap id="BaseMapResult" type="com.athub.entity.Address">
+        <id property="id" column="ID"/>
+        <result property="description" column="DESCRIPTION"/>
+        <result property="enterby" column="ENTERBY"/>
+        <result property="enterDate" column="ENTERDATE"/>
+        <association property="person" resultMap="com.athub.mapperdao.PersonMapper.BaseMapResult"
+                     columnPrefix="b_"></association>
+    </resultMap>
+
+    <select id="selectList" parameterType="com.athub.entity.Address" resultMap="BaseMapResult">
+        SELECT
+        <include refid="select_parameter"/>
+        FROM address a
+        LEFT JOIN person b ON a.person_id = b.id
+        WHERE 1=1
+        <include refid="where_sql_conditions"/>
+    </select>
+
+</mapper>

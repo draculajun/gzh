@@ -6,6 +6,6 @@ import com.athub.utils.AthubBaseMapper;
 /**
  * @Author Wang wenjun
  */
-public interface AddressMapper extends BaseMapper<Address> {
+public interface AddressMapper extends AthubBaseMapper<Address> {
 
 }

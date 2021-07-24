@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Data
 @TableName("address")
-public class Address implements Serializable {
+public class Address extends Page implements Serializable {
 
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;

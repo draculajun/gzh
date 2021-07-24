@@ -1,10 +1,8 @@
 package com.athub.controller;
 
 import com.athub.entity.Address;
-import com.athub.dto.Result;
 import com.athub.service.AddressService;
-import com.athub.utils.ResultUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.athub.utils.AthubBaseController;
 import org.springframework.web.bind.annotation.*;
 
 /**

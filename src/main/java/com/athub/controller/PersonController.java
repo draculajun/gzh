@@ -12,14 +12,4 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/person")
 public class PersonController extends AthubBaseController<Person, PersonService> {
 
-    @PostMapping("/list")
-    public Result list(@RequestBody Person person) {
-        return ResultUtils.success(baseService.selectList(person), "");
-    }
-
-    @PostMapping("/page")
-    public Result page(@RequestBody Person person) {
-        return ResultUtils.success(baseService.page(person), "");
-    }
-
 }

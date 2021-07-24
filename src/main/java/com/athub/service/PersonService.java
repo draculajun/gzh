@@ -1,13 +1,9 @@
 package com.athub.service;
 
 import com.athub.entity.Person;
+import com.athub.utils.service.AthubBaseService;
 
-public interface PersonService {
+public interface PersonService extends AthubBaseService<Person> {
 
-    Person selectById(Long id);
-
-    int insert(Person person);
-
-    int deleteById(Long id);
 
 }

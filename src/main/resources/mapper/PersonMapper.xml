@@ -9,6 +9,37 @@
         <result property="age" column="AGE"/>
         <result property="enterby" column="ENTERBY"/>
         <result property="enterDate" column="ENTERDATE"/>
+        <result property="deleted" column="DELETED"/>
     </resultMap>
 
+    <sql id="where_sql_conditions">
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="ids != null and ids.size > 0">
+            AND id in
+            <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="name != null and name !=''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+    </sql>
+
+    <select id="selectList" parameterType="com.athub.entity.Person" resultMap="BaseMapResult">
+        SELECT * FROM person WHERE 1=1
+        <include refid="where_sql_conditions"/>
+    </select>
+
+    <select id="selectPageCount" parameterType="com.athub.entity.Person" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM person WHERE 1=1
+        <include refid="where_sql_conditions"/>
+    </select>
+
+    <select id="selectPageList" parameterType="com.athub.entity.Person" resultMap="BaseMapResult">
+        SELECT * FROM person WHERE 1=1
+        <include refid="where_sql_conditions"/>
+        LIMIT #{offset}, #{pageSize}
+    </select>
 </mapper>

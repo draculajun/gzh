@@ -6,13 +6,20 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
+/**
+ * @Author Wang wenjun
+ */
 @Data
 @TableName("person")
-public class Person implements Serializable {
+public class Person extends Page implements Serializable {
 
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
+
+    @TableField(exist = false)
+    private List<Long> ids;
 
     private String name;
 

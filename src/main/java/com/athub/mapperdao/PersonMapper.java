@@ -1,8 +1,8 @@
 package com.athub.mapperdao;
 
 import com.athub.entity.Person;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.athub.utils.AthubBaseMapper;
 
-public interface PersonMapper extends BaseMapper<Person> {
+public interface PersonMapper extends AthubBaseMapper<Person> {
 
 }

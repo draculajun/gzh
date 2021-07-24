@@ -4,7 +4,10 @@
 <mapper namespace="com.athub.mapperdao.AddressMapper">
 
     <sql id="select_parameter">
-        a.id AS ID,
+        a
+        .
+        id
+        AS ID,
         a.description AS DESCRIPTION,
         a.enterby AS ENTERBY,
         a.enterdate AS ENTERDATE,
@@ -55,6 +58,25 @@
         LEFT JOIN person b ON a.person_id = b.id
         WHERE 1=1
         <include refid="where_sql_conditions"/>
+    </select>
+
+    <select id="selectPageCount" parameterType="com.athub.entity.Address" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1)
+        FROM address a
+        LEFT JOIN person b ON a.person_id = b.id
+        WHERE 1=1
+        <include refid="where_sql_conditions"/>
+    </select>
+
+    <select id="selectPageList" parameterType="com.athub.entity.Address" resultMap="BaseMapResult">
+        SELECT
+        <include refid="select_parameter"/>
+        FROM address a
+        LEFT JOIN person b ON a.person_id = b.id
+        WHERE 1=1
+        <include refid="where_sql_conditions"/>
+        LIMIT #{offset}, #{pageSize}
     </select>
 
 </mapper>

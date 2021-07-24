@@ -1,18 +1,13 @@
 package com.athub.service;
 
 import com.athub.entity.Address;
-
-import java.util.List;
+import com.athub.utils.service.AthubBaseService;
 
 /**
  * @Author Wang wenjun
  */
-public interface AddressService {
+public interface AddressService extends AthubBaseService<Address> {
 
-    Address selectById(Long id);
 
-    int insert(Address address);
-
-    List<Address> selectList(Address address);
 
 }

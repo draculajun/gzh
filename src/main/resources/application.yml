@@ -8,10 +8,10 @@ spring:
     name: gzh
 
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8&useSSL=true&serverTimezone=GMT%2b8&allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8&&serverTimezone=UTC&allowMultiQueries=true&autoReconnect=true&failOverReadOnly=false&rewriteBatchedStatements=true
     username: root
-    password: wucena008
+    password: root
 
 mybatis:
   mapper-locations: classpath*:/mapper/**Mapper.xml

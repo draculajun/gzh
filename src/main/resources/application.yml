@@ -6,9 +6,6 @@ server:
 spring:
   application:
     name: gzh
-  profiles:
-    active:
-      dev
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver

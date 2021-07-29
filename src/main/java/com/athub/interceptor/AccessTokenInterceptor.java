@@ -23,8 +23,7 @@ public class AccessTokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
-        String accessToken = AccessTokenJob.getAccessTokenStr();
-//        String accessToken = request.getHeader("accessToken");
+
         PrintWriter out;
 
         // 对于注解的判断
@@ -36,6 +35,9 @@ public class AccessTokenInterceptor implements HandlerInterceptor {
         if (handlerMethod.getMethodAnnotation(NoNeedAccessToken.class) != null || handlerMethod.getBeanType().isAnnotationPresent(NoNeedAccessToken.class)) {
             return true;
         }
+
+        String accessToken = AccessTokenJob.getAccessTokenStr();
+//        String accessToken = request.getHeader("accessToken");
 
         if (accessToken == null || !AccessTokenJob.getAccessTokenStr().equals(accessToken)) {
             JSONObject res = new JSONObject();
